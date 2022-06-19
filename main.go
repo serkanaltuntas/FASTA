@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"fmt"
 	"os"
 )
 
@@ -57,7 +58,35 @@ func main() {
 		panic(err)
 	}
 	for _, record := range records {
-		println(record.header)
-		println(record.sequence)
+		fmt.Println(record.header)
+		fmt.Println(record.sequence)
+
+		// if sequence include characters other than A,a,T,t,C,c,G,g, warn the user and pass to the next record
+		if !(record.sequence[0] == 'A' || record.sequence[0] == 'a' || record.sequence[0] == 'T' || record.sequence[0] == 't' || record.sequence[0] == 'C' || record.sequence[0] == 'c' || record.sequence[0] == 'G' || record.sequence[0] == 'g') {
+			fmt.Println("Warning: sequence contains characters other than A,a,T,t,C,c,G,g, skipping record for GC content calculation.")
+			continue
+		}
+
+		// calculate GC content and print it
+		gc, at, nt := record.GCcontent()
+		fmt.Println("-----Summary-----")
+		fmt.Println("All:", nt)
+		fmt.Printf("GC content: %.2f\n", gc)
+		fmt.Printf("AT content: %.2f\n", at)
 	}
+}
+
+// create a function that calculates number of G and C contents separately in a fasta record
+func (f fasta) GCcontent() (float64, float64, int) {
+	var nt, gcCount, atCount int
+	for _, nt := range f.sequence {
+		switch nt {
+		case 'G', 'g', 'C', 'c':
+			gcCount++
+		case 'A', 'a', 'T', 't':
+			atCount++
+		}
+	}
+	nt = gcCount + atCount
+	return float64(gcCount) / float64(nt), float64(atCount) / float64(nt), nt
 }
