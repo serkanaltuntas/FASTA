@@ -23,6 +23,6 @@ go run main.go examples/example1.fasta
 * Serkan Altuntaş
 
 ## Example file source:
-http://prodata.swmed.edu/promals/info/fasta_format_file_example.htm
-https://www.bioinformatics.nl/tools/crab_fasta.html
-https://www.ncbi.nlm.nih.gov/nuccore/CAAGRJ010006848.1?report=fasta
+* http://prodata.swmed.edu/promals/info/fasta_format_file_example.htm
+* https://www.bioinformatics.nl/tools/crab_fasta.html
+* https://www.ncbi.nlm.nih.gov/nuccore/CAAGRJ010006848.1?report=fasta
